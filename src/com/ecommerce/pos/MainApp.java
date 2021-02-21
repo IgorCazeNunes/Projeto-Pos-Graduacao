@@ -8,13 +8,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import com.ecommerce.pos.model.Product;
+import com.ecommerce.pos.controller.ProductDAO;
 import com.ecommerce.pos.view.ProductOverviewCon;
 import com.ecommerce.pos.view.ProductEditDialogCon;
 
@@ -23,33 +23,18 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Product> productData;
+    private ProductDAO productDAO = new ProductDAO();
 
     public MainApp() {
-        productData = FXCollections.observableArrayList();
-        productData.add(new Product("Produto 01", 100.0));
-        productData.add(new Product("Produto 02", 200.0));
-        productData.add(new Product("Produto 03", 300.0));
-        productData.add(new Product("Produto 04", 400.0));
-        productData.add(new Product("Produto 05", 500.0));
-        productData.add(new Product("Produto 06", 600.0));
-        productData.add(new Product("Produto 07", 700.0));
-        productData.add(new Product("Produto 08", 800.0));
-        productData.add(new Product("Produto 09", 900.0));
-        productData.add(new Product("Produto 10", 1000.0));
-        productData.add(new Product("Produto 01", 100.0));
-        productData.add(new Product("Produto 02", 200.0));
-        productData.add(new Product("Produto 03", 300.0));
-        productData.add(new Product("Produto 04", 400.0));
-        productData.add(new Product("Produto 05", 500.0));
-        productData.add(new Product("Produto 06", 600.0));
-        productData.add(new Product("Produto 07", 700.0));
-        productData.add(new Product("Produto 08", 800.0));
-        productData.add(new Product("Produto 09", 900.0));
-        productData.add(new Product("Produto 10", 1000.0));
+        updateProductList();
     }
     
     public ObservableList<Product> getProductData() {
         return productData;
+    }
+    
+    public void updateProductList() {
+        productData = productDAO.listAll();
     }
     
     @Override
