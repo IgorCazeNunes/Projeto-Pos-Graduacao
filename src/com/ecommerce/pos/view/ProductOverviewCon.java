@@ -97,6 +97,7 @@ public class ProductOverviewCon {
         boolean okClicked = mainApp.showProductEditDialog(tempProduct);
 
         if (okClicked) {
+            mainApp.getProductDao().save(tempProduct);
             mainApp.getProductData().add(tempProduct);
         }
     }

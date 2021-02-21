@@ -64,8 +64,8 @@ public class ProductDAO {
     }
 
     public void save(Product produto) {
-        String sql = "INSERT INTO produto(nome, valor, categoria, descricao)"
-                + " VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO produto(id, nome, valor, categoria, descricao)"
+                + " VALUES(?::uuid, ?, ?, ?, ?)";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -75,10 +75,11 @@ public class ProductDAO {
 
             statement = connection.prepareStatement(sql);
 
-            statement.setString(1, produto.getName());
-            statement.setDouble(2, produto.getValue());
-            statement.setString(3, produto.getCategory());
-            statement.setString(4, produto.getDescription());
+            statement.setString(1, produto.getId());
+            statement.setString(2, produto.getName());
+            statement.setDouble(3, produto.getValue());
+            statement.setString(4, produto.getCategory());
+            statement.setString(5, produto.getDescription());
 
             statement.execute();
         } catch (Exception e) {
