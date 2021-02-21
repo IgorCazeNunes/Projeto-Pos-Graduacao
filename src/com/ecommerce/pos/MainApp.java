@@ -33,6 +33,10 @@ public class MainApp extends Application {
         return productData;
     }
     
+    public ProductDAO getProductDao() {
+        return productDAO;
+    }
+    
     public void updateProductList() {
         productData = productDAO.listAll();
     }

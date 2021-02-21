@@ -36,14 +36,11 @@ public class ProductOverviewCon {
 
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         valueColumn.setCellValueFactory(cellData -> cellData.getValue().valueProperty().asObject());
 
-        // Clear person details.
         showProductDetails(null);
 
-        // Listen for selection changes and show the person details when changed.
         productTable
                 .getSelectionModel()
                 .selectedItemProperty()
@@ -58,59 +55,59 @@ public class ProductOverviewCon {
     }
 
     private void showProductDetails(Product product) {
+        idLabel.setText("Nenhum produto selecionado...");
+        nameLabel.setText("Nenhum produto selecionado...");
+        valueLabel.setText("Nenhum produto selecionado...");
+        descriptionLabel.setText("Nenhum produto selecionado...");
+        categoryLabel.setText("Nenhum produto selecionado...");
+
         if (product != null) {
-            // Fill the labels with info from the person object.
             idLabel.setText(product.getId());
             nameLabel.setText(product.getName());
             valueLabel.setText(Double.toString(product.getValue()));
             descriptionLabel.setText(product.getDescription());
             categoryLabel.setText(product.getCategory());
-        } else {
-            // Person is null, remove all the text.
-            idLabel.setText("Nenhum produto selecionado...");
-            nameLabel.setText("Nenhum produto selecionado...");
-            valueLabel.setText("Nenhum produto selecionado...");
-            descriptionLabel.setText("Nenhum produto selecionado...");
-            categoryLabel.setText("Nenhum produto selecionado...");
         }
     }
 
     @FXML
     private void handleDeleteProduct() {
         int selectedIndex = productTable.getSelectionModel().getSelectedIndex();
+        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
 
-        if (selectedIndex >= 0) {
+        try {
+            mainApp.getProductDao().removeById(selectedProduct.getId());
             productTable.getItems().remove(selectedIndex);
-        } else {
-            // Nothing selected.
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.initOwner(mainApp.getPrimaryStage());
             alert.setTitle("Sem Seleção");
             alert.setHeaderText("Nenhum produto selecionado...");
             alert.setContentText("Por favor, selecione um produto na tabela.");
-
             alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
     private void handleNewProduct() {
         Product tempProduct = new Product();
-        
+
         boolean okClicked = mainApp.showProductEditDialog(tempProduct);
-        
+
         if (okClicked) {
             mainApp.getProductData().add(tempProduct);
         }
     }
-    
+
     @FXML
     private void handleEditProduct() {
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
-        
+
         if (selectedProduct != null) {
             boolean okClicked = mainApp.showProductEditDialog(selectedProduct);
-            
+
             if (okClicked) {
                 showProductDetails(selectedProduct);
             }
