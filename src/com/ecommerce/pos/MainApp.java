@@ -108,7 +108,7 @@ public class MainApp extends Application {
 
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
-            dialogStage.setTitle(product.getId() != null ? "Edição de Produto" : "Inserção de Produto");
+            dialogStage.setTitle(product.getId().equals("") ? "Inserção de Produto" : "Edição de Produto");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             
@@ -118,7 +118,7 @@ public class MainApp extends Application {
             // Set the person into the controller.
             ProductEditDialogCon controller = loader.getController();
             controller.setDialogStage(dialogStage);
-            controller.setProduct(product);
+            controller.setProductField(product);
             
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

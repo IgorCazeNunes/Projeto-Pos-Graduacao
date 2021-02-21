@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import com.ecommerce.pos.model.Product;
+import java.util.UUID;
 
 public class ProductEditDialogCon {
 
@@ -32,7 +33,7 @@ public class ProductEditDialogCon {
         this.dialogStage = dialogStage;
     }
 
-    public void setProduct(Product product) {
+    public void setProductField(Product product) {
         this.product = product;
 
         nameField.setText(product.getName());
@@ -48,6 +49,10 @@ public class ProductEditDialogCon {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
+            if (product.getId().equals("")) {
+                product.setId(UUID.randomUUID().toString());
+            }
+            
             product.setName(nameField.getText());
             product.setValue(new Double(valueField.getText()));
             product.setCategory(categoryField.getText());

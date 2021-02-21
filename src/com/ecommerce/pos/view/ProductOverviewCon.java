@@ -96,7 +96,9 @@ public class ProductOverviewCon {
     @FXML
     private void handleNewProduct() {
         Product tempProduct = new Product();
+        
         boolean okClicked = mainApp.showProductEditDialog(tempProduct);
+        
         if (okClicked) {
             mainApp.getProductData().add(tempProduct);
         }
