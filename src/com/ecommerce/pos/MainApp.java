@@ -26,7 +26,7 @@ public class MainApp extends Application {
     private ProductDAO productDAO = new ProductDAO();
 
     public MainApp() {
-        updateProductList();
+        productData = productDAO.listAll();
     }
     
     public ObservableList<Product> getProductData() {
@@ -35,10 +35,6 @@ public class MainApp extends Application {
     
     public ProductDAO getProductDao() {
         return productDAO;
-    }
-    
-    public void updateProductList() {
-        productData = productDAO.listAll();
     }
     
     @Override
