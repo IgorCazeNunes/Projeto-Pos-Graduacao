@@ -15,7 +15,11 @@ public class Product {
     private final StringProperty category;
 
     public Product() {
-        this(null, null);
+        this.id = new SimpleStringProperty("");
+        this.name = new SimpleStringProperty("");
+        this.value = new SimpleDoubleProperty(new Double(0));
+        this.category = new SimpleStringProperty("");
+        this.description = new SimpleStringProperty("");
     }
 
     public Product(String name, Double value) {
@@ -64,7 +68,7 @@ public class Product {
         return value.get();
     }
 
-    public void setValue(int value) {
+    public void setValue(Double value) {
         this.value.set(value);
     }
 

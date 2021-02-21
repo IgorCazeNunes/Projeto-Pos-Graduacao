@@ -67,10 +67,11 @@ public class ProductOverviewCon {
             categoryLabel.setText(product.getCategory());
         } else {
             // Person is null, remove all the text.
-            nameLabel.setText("");
-            valueLabel.setText("");
-            descriptionLabel.setText("");
-            categoryLabel.setText("");
+            idLabel.setText("Nenhum produto selecionado...");
+            nameLabel.setText("Nenhum produto selecionado...");
+            valueLabel.setText("Nenhum produto selecionado...");
+            descriptionLabel.setText("Nenhum produto selecionado...");
+            categoryLabel.setText("Nenhum produto selecionado...");
         }
     }
 
@@ -92,32 +93,33 @@ public class ProductOverviewCon {
         }
     }
 
-//    @FXML
-//    private void handleNewProduct() {
-//        Product tempProduct = new Product();
-//        boolean okClicked = mainApp.showPersonEditDialog(tempProduct);
-//        if (okClicked) {
-//            mainApp.getPersonData().add(tempProduct);
-//        }
-//    }
-//    @FXML
-//    private void handleEditPerson() {
-//        Person selectedPerson = productTable.getSelectionModel().getSelectedItem();
-//        if (selectedPerson != null) {
-//            boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
-//            if (okClicked) {
-//                showProductDetails(selectedPerson);
-//            }
-//
-//        } else {
-//            // Nothing selected.
-//            Alert alert = new Alert(AlertType.WARNING);
-//            alert.initOwner(mainApp.getPrimaryStage());
-//            alert.setTitle("No Selection");
-//            alert.setHeaderText("No Person Selected");
-//            alert.setContentText("Please select a person in the table.");
-//
-//            alert.showAndWait();
-//        }
-//    }
+    @FXML
+    private void handleNewProduct() {
+        Product tempProduct = new Product();
+        boolean okClicked = mainApp.showProductEditDialog(tempProduct);
+        if (okClicked) {
+            mainApp.getProductData().add(tempProduct);
+        }
+    }
+    
+    @FXML
+    private void handleEditProduct() {
+        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        
+        if (selectedProduct != null) {
+            boolean okClicked = mainApp.showProductEditDialog(selectedProduct);
+            
+            if (okClicked) {
+                showProductDetails(selectedProduct);
+            }
+        } else {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.initOwner(mainApp.getPrimaryStage());
+            alert.setTitle("Sem Seleção");
+            alert.setHeaderText("Nenhum Produto Selecionado");
+            alert.setContentText("Por favor selecione um produto na tabela.");
+
+            alert.showAndWait();
+        }
+    }
 }
