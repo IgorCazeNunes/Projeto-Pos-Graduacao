@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import com.ecommerce.pos.model.Product;
-import java.util.UUID;
 
 public class ProductEditDialogCon {
 
