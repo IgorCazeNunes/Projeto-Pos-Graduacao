@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import com.ecommerce.pos.model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.postgresql.util.PSQLException;
 
 public class ProductDAO {
 
-    public ObservableList<Product> listAll() {
+    public ObservableList<Product> listAll() throws PSQLException {
 
         String sql = "SELECT * FROM produto";
 
@@ -39,6 +40,8 @@ public class ProductDAO {
 
                 produtosList.add(produto);
             }
+        } catch (PSQLException e) {
+            throw e;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

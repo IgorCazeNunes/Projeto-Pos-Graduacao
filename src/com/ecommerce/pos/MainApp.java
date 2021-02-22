@@ -1,10 +1,8 @@
 package com.ecommerce.pos;
 
-
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,47 +15,60 @@ import com.ecommerce.pos.model.Product;
 import com.ecommerce.pos.controller.ProductDAO;
 import com.ecommerce.pos.view.ProductOverviewCon;
 import com.ecommerce.pos.view.ProductEditDialogCon;
+import javafx.scene.control.Alert;
+import org.postgresql.util.PSQLException;
 
 public class MainApp extends Application {
-    
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Product> productData;
     private ProductDAO productDAO = new ProductDAO();
 
     public MainApp() {
-        productData = productDAO.listAll();
+        try {
+            productData = productDAO.listAll();
+        } catch (PSQLException e) {
+            alertErrorDataBase();
+        }
     }
-    
+
+    public final void alertErrorDataBase() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        
+        alert.initOwner(primaryStage);
+        alert.setTitle("Sem Conexão ao Banco");
+        alert.setHeaderText("Problemas ao conectar com o banco de dados postgres.");
+        alert.setContentText("Por favor verifique a seu container do banco de dados.");
+        alert.showAndWait();
+        
+        System.exit(0);
+    }
+
     public ObservableList<Product> getProductData() {
         return productData;
     }
-    
+
     public ProductDAO getProductDao() {
         return productDAO;
     }
-    
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("AddressApp");
-        
+        this.primaryStage.setTitle("E-Commerce [CRUD Produto]");
+
         initRootLayout();
-        
+
         showProductOverview();
     }
-    
-    /**
-     * Initializes the root layout.
-     */
+
     public void initRootLayout() {
         try {
-            // Load root layout from fxml file.
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
             rootLayout = (BorderPane) fxmlLoader.load();
 
-            // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -65,47 +76,40 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-    
+
     public void showProductOverview() {
         try {
-            // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ProductOverview.fxml"));
             AnchorPane productOverview = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
             rootLayout.setCenter(productOverview);
 
-            // Give the controller access to the main app.
             ProductOverviewCon controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     public boolean showProductEditDialog(Product product) {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("view/ProductEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
-            // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle(product.getId().equals("") ? "Inserção de Produto" : "Edição de Produto");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
-            
+
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            // Set the person into the controller.
             ProductEditDialogCon controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setProductField(product);
-            
-            // Show the dialog and wait until the user closes it
+
             dialogStage.showAndWait();
 
             return controller.isOkClicked();
@@ -114,7 +118,7 @@ public class MainApp extends Application {
             return false;
         }
     }
-    
+
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -122,5 +126,5 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

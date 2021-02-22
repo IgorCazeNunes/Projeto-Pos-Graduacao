@@ -1,5 +1,6 @@
 package com.ecommerce.pos.view;
 
+import com.ecommerce.pos.controller.ProductDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -24,6 +25,8 @@ public class ProductEditDialogCon {
     private Product product;
 
     private boolean okClicked = false;
+    
+    private ProductDAO productDAO = new ProductDAO();
 
     @FXML
     private void initialize() {
@@ -48,8 +51,11 @@ public class ProductEditDialogCon {
 
     @FXML
     private void handleOk() {
+        boolean isNewProduct = false;
+        
         if (isInputValid()) {
             if (product.getId().equals("")) {
+                isNewProduct = true;
                 product.setId(UUID.randomUUID().toString());
             }
             
@@ -57,6 +63,11 @@ public class ProductEditDialogCon {
             product.setValue(new Double(valueField.getText()));
             product.setCategory(categoryField.getText());
             product.setDescription(descriptionField.getText());
+            
+            if (isNewProduct) {
+            } else {
+                productDAO.update(product);
+            }
 
             okClicked = true;
             dialogStage.close();

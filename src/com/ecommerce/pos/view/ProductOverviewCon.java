@@ -93,10 +93,15 @@ public class ProductOverviewCon {
     @FXML
     private void handleNewProduct() {
         Product tempProduct = new Product();
+        
+        System.out.println(tempProduct.toString());
 
         boolean okClicked = mainApp.showProductEditDialog(tempProduct);
+        
+        System.out.println(tempProduct.toString());
 
         if (okClicked) {
+            System.out.println(tempProduct.toString());
             mainApp.getProductDao().save(tempProduct);
             mainApp.getProductData().add(tempProduct);
         }
