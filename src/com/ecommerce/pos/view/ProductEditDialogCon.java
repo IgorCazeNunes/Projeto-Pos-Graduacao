@@ -26,7 +26,7 @@ public class ProductEditDialogCon {
 
     private boolean okClicked = false;
     
-    private ProductDAO productDAO = new ProductDAO();
+    private final ProductDAO productDAO = new ProductDAO();
 
     @FXML
     private void initialize() {
@@ -47,36 +47,6 @@ public class ProductEditDialogCon {
 
     public boolean isOkClicked() {
         return okClicked;
-    }
-
-    @FXML
-    private void handleOk() {
-        boolean isNewProduct = false;
-        
-        if (isInputValid()) {
-            if (product.getId().equals("")) {
-                isNewProduct = true;
-                product.setId(UUID.randomUUID().toString());
-            }
-            
-            product.setName(nameField.getText());
-            product.setValue(new Double(valueField.getText()));
-            product.setCategory(categoryField.getText());
-            product.setDescription(descriptionField.getText());
-            
-            if (isNewProduct) {
-            } else {
-                productDAO.update(product);
-            }
-
-            okClicked = true;
-            dialogStage.close();
-        }
-    }
-
-    @FXML
-    private void handleCancel() {
-        dialogStage.close();
     }
 
     private boolean isInputValid() {
@@ -117,6 +87,37 @@ public class ProductEditDialogCon {
 
             return false;
         }
+    }
+    
+    @FXML
+    private void handleOk() {
+        boolean isNewProduct = false;
+        
+        if (isInputValid()) {
+            if (product.getId().equals("")) {
+                isNewProduct = true;
+                product.setId(UUID.randomUUID().toString());
+            }
+            
+            product.setName(nameField.getText());
+            product.setValue(new Double(valueField.getText()));
+            product.setCategory(categoryField.getText());
+            product.setDescription(descriptionField.getText());
+            
+            if (isNewProduct) {
+                productDAO.save(product);
+            } else {
+                productDAO.update(product);
+            }
+
+            okClicked = true;
+            dialogStage.close();
+        }
+    }
+
+    @FXML
+    private void handleCancel() {
+        dialogStage.close();
     }
 
 }
