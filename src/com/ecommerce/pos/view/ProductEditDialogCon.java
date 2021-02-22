@@ -96,7 +96,7 @@ public class ProductEditDialogCon {
         if (isInputValid()) {
             if (product.getId().equals("")) {
                 isNewProduct = true;
-                product.setId(UUID.randomUUID().toString());
+                product.setGeneratedUUID();
             }
             
             product.setName(nameField.getText());

@@ -3,11 +3,11 @@ package com.ecommerce.pos.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import com.ecommerce.pos.model.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.postgresql.util.PSQLException;
+
+import com.ecommerce.pos.model.Product;
 
 public class ProductDAO {
 

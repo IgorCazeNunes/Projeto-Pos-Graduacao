@@ -6,7 +6,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
 import com.ecommerce.pos.MainApp;
+import com.ecommerce.pos.controller.ProductDAO;
 import com.ecommerce.pos.model.Product;
 
 public class ProductOverviewCon {
@@ -30,6 +32,8 @@ public class ProductOverviewCon {
     private Label categoryLabel;
 
     private MainApp mainApp;
+
+    private final ProductDAO productDAO = new ProductDAO();
 
     public ProductOverviewCon() {
     }
@@ -70,21 +74,25 @@ public class ProductOverviewCon {
         }
     }
 
+    public final void alertErrorProductSelect() {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.initOwner(mainApp.getPrimaryStage());
+        alert.setTitle("Sem Conexão ao Banco");
+        alert.setHeaderText("Problemas ao conectar com o banco de dados postgres.");
+        alert.setContentText("Por favor verifique a seu container do banco de dados.");
+        alert.showAndWait();
+    }
+
     @FXML
     private void handleDeleteProduct() {
         int selectedIndex = productTable.getSelectionModel().getSelectedIndex();
         Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
 
         try {
-            mainApp.getProductDao().removeById(selectedProduct.getId());
+            productDAO.removeById(selectedProduct.getId());
             productTable.getItems().remove(selectedIndex);
         } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Sem Seleção");
-            alert.setHeaderText("Nenhum produto selecionado...");
-            alert.setContentText("Por favor, selecione um produto na tabela.");
-            alert.showAndWait();
+            alertErrorProductSelect();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,9 +101,9 @@ public class ProductOverviewCon {
     @FXML
     private void handleNewProduct() {
         Product tempProduct = new Product();
-        
+
         boolean okClicked = mainApp.showProductEditDialog(tempProduct);
-        
+
         if (okClicked) {
             mainApp.getProductData().add(tempProduct);
         }
@@ -103,22 +111,18 @@ public class ProductOverviewCon {
 
     @FXML
     private void handleEditProduct() {
-        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
-
-        if (selectedProduct != null) {
+        try {
+            Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+            
             boolean okClicked = mainApp.showProductEditDialog(selectedProduct);
 
             if (okClicked) {
                 showProductDetails(selectedProduct);
             }
-        } else {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Sem Seleção");
-            alert.setHeaderText("Nenhum Produto Selecionado");
-            alert.setContentText("Por favor selecione um produto na tabela.");
-
-            alert.showAndWait();
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
+            alertErrorProductSelect();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

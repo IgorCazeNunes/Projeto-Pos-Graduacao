@@ -22,16 +22,6 @@ public class Product {
         this.description = new SimpleStringProperty("");
     }
 
-    public Product(String name, Double value) {
-        this.name = new SimpleStringProperty(name);
-        this.value = new SimpleDoubleProperty(value);
-        
-        // Some initial dummy data, just for convenient testing.
-        this.id = new SimpleStringProperty(UUID.randomUUID().toString());
-        this.description = new SimpleStringProperty("Descrição Teste");
-        this.category = new SimpleStringProperty("Categoria Teste");
-    }
-
     public Product(String id, String name, Double value, String description, String category) {
         this.id = new SimpleStringProperty(id);
         this.name = new SimpleStringProperty(name);
@@ -44,8 +34,8 @@ public class Product {
         return id.get();
     }
 
-    public void setId(String value) {
-        id.set(value);
+    public void setGeneratedUUID() {
+        id.set(UUID.randomUUID().toString());
     }
 
     public StringProperty idProperty() {
