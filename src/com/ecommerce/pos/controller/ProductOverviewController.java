@@ -1,4 +1,4 @@
-package com.ecommerce.pos.view;
+package com.ecommerce.pos.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -8,10 +8,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import com.ecommerce.pos.MainApp;
-import com.ecommerce.pos.controller.ProductDAO;
+import com.ecommerce.pos.service.ProductDAO;
 import com.ecommerce.pos.model.Product;
 
-public class ProductOverviewCon {
+public class ProductOverviewController {
 
     @FXML
     private TableView<Product> productTable;
@@ -35,7 +35,7 @@ public class ProductOverviewCon {
 
     private final ProductDAO productDAO = new ProductDAO();
 
-    public ProductOverviewCon() {
+    public ProductOverviewController() {
     }
 
     @FXML

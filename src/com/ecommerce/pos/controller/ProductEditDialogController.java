@@ -1,6 +1,6 @@
-package com.ecommerce.pos.view;
+package com.ecommerce.pos.controller;
 
-import com.ecommerce.pos.controller.ProductDAO;
+import com.ecommerce.pos.service.ProductDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import com.ecommerce.pos.model.Product;
 
-public class ProductEditDialogCon {
+public class ProductEditDialogController {
 
     @FXML
     private TextField nameField;

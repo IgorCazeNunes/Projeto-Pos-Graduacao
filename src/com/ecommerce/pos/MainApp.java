@@ -12,9 +12,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import com.ecommerce.pos.model.Product;
-import com.ecommerce.pos.controller.ProductDAO;
-import com.ecommerce.pos.view.ProductOverviewCon;
-import com.ecommerce.pos.view.ProductEditDialogCon;
+import com.ecommerce.pos.service.ProductDAO;
+import com.ecommerce.pos.controller.ProductOverviewController;
+import com.ecommerce.pos.controller.ProductEditDialogController;
 import javafx.scene.control.Alert;
 import org.postgresql.util.PSQLException;
 
@@ -85,7 +85,7 @@ public class MainApp extends Application {
 
             rootLayout.setCenter(productOverview);
 
-            ProductOverviewCon controller = loader.getController();
+            ProductOverviewController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +106,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
-            ProductEditDialogCon controller = loader.getController();
+            ProductEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setProductField(product);
 

@@ -1,4 +1,4 @@
-package com.ecommerce.pos.controller;
+package com.ecommerce.pos.service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import com.ecommerce.pos.model.Product;
 
 public class ProductDAO {
 
-    public ObservableList<Product> listAll() throws PSQLException {
+    public ObservableList<Product> listAll() throws PSQLException  {
 
         String sql = "SELECT * FROM produto";
 
@@ -23,7 +23,7 @@ public class ProductDAO {
         ResultSet resultSet = null;
 
         try {
-            connection = ConnectionFactory.createConnectionToPostgresql();
+            connection = ConnectionFactory.createConnection();
 
             statement = connection.prepareStatement(sql);
 
@@ -74,7 +74,7 @@ public class ProductDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = ConnectionFactory.createConnectionToPostgresql();
+            connection = ConnectionFactory.createConnection();
 
             statement = connection.prepareStatement(sql);
 
@@ -109,7 +109,7 @@ public class ProductDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = ConnectionFactory.createConnectionToPostgresql();
+            connection = ConnectionFactory.createConnection();
 
             statement = connection.prepareStatement(sql);
 
@@ -146,7 +146,7 @@ public class ProductDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = ConnectionFactory.createConnectionToPostgresql();
+            connection = ConnectionFactory.createConnection();
 
             statement = connection.prepareStatement(sql);
 

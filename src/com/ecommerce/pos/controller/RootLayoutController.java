@@ -1,8 +1,8 @@
-package com.ecommerce.pos.view;
+package com.ecommerce.pos.controller;
 
 import javafx.fxml.FXML;
 
-public class RootLayoutCon {
+public class RootLayoutController {
 
     @FXML
     private void handleExit() {
