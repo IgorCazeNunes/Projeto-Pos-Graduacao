@@ -33,26 +33,6 @@ public class MainApp extends Application {
         }
     }
 
-    public final void alertErrorDataBase() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        
-        alert.initOwner(primaryStage);
-        alert.setTitle("Sem Conexão ao Banco");
-        alert.setHeaderText("Problemas ao conectar com o banco de dados postgres.");
-        alert.setContentText("Por favor verifique a seu container do banco de dados.");
-        alert.showAndWait();
-        
-        System.exit(0);
-    }
-
-    public ObservableList<Product> getProductData() {
-        return productData;
-    }
-
-    public ProductDAO getProductDao() {
-        return productDAO;
-    }
-
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -118,9 +98,29 @@ public class MainApp extends Application {
             return false;
         }
     }
-
+    
+    public final void alertErrorDataBase() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        
+        alert.initOwner(primaryStage);
+        alert.setTitle("Sem Conexão ao Banco");
+        alert.setHeaderText("Problemas ao conectar com o banco de dados postgres.");
+        alert.setContentText("Por favor verifique a seu container do banco de dados.");
+        alert.showAndWait();
+        
+        System.exit(0);
+    }
+    
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+    
+    public ObservableList<Product> getProductData() {
+        return productData;
+    }
+
+    public ProductDAO getProductDao() {
+        return productDAO;
     }
 
     public static void main(String[] args) {
