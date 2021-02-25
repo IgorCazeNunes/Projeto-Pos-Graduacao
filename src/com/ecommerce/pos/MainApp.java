@@ -119,10 +119,6 @@ public class MainApp extends Application {
         return productData;
     }
 
-    public ProductDAO getProductDao() {
-        return productDAO;
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
